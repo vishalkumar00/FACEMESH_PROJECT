@@ -1,5 +1,14 @@
+//install dependencies. done 
+//import dependencies. done
+
 import logo from './logo.svg';
 import './App.css';
+import React,{useRef} from 'react';
+// this will allow us to use the webcam and ref to access the webcam stream
+import * as tf from '@tensorflow/tfjs';
+import * as facemesh from '@tensorflow-models/facemesh';
+import webcam from 'react-webcam';
+import { useRef } from 'react';
 
 function App() {
   return (

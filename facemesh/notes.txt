@@ -1,0 +1,76 @@
+  the dependencies used in project 
+  1 What is @tensorflow/tfjs?
+
+It’s the JavaScript version of TensorFlow — the famous machine learning framework originally created by Google.
+
+But here’s the cool part.
+
+With TensorFlow.js you can:
+
+• Run machine learning models directly in the browser
+• Use your GPU through WebGL
+• Do face detection, hand tracking, object detection
+• Train small neural networks inside JavaScript
+
+No Python required.
+
+So in short:
+
+npm install @tensorflow/tfjs
+
+means:
+
+“Download the TensorFlow machine learning brain for JavaScript and attach it to my project.”
+
+After installing, you import it like:
+
+import * as tf from '@tensorflow/tfjs';
+
+Then you can start creating tenso
+
+
+
+////
+
+2 you’re installing a pretrained face landmark detection model built on top of TensorFlow.js.
+
+Let’s decode it clearly.
+
+@tensorflow-models/facemesh
+→ This is a high-level model package.
+→ It depends on @tensorflow/tfjs under the hood.
+→ It detects detailed 3D face landmarks from an image or webcam.
+
+This model can detect 468 facial points on a human face.
+
+Not just “there is a face.”
+It maps:
+
+• Eyes
+• Eyebrows
+• Nose
+• Lips
+• Jawline
+• Face contour
+
+Think of it like turning your face into a coordinate system.
+
+What actually happens?
+
+When you load it:
+
+import * as facemesh from '@tensorflow-models/facemesh';
+
+Then:
+
+const model = await facemesh.load();
+
+You are loading a neural network trained on thousands of faces.
+
+
+3 
+ react webcam for using the system webcam
+
+ npm i @tensorflow/tfjs  @tensorflow-models/facemesh react-webcam
+
+ run all together 
