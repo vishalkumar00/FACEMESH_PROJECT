@@ -131,3 +131,23 @@ const runFacemesh = async ()=>{
     })
 
   }
+
+  // loop through all detected face landmark points
+for (let i = 0; i < keyPoints.length; i++) {
+
+  // get x and y position of each landmark
+  const xAxis = keyPoints[i][0];
+  const yAxis = keyPoints[i][1];
+
+  // start drawing on canvas
+  ctx.beginPath();
+
+  // draw small circle at landmark position
+  ctx.arc(xAxis, yAxis, 1, 0, 3 * Math.PI);
+
+  // set point color
+  ctx.fillStyle = "red";
+
+  // fill the circle (make the point visible)
+  ctx.fill();
+}

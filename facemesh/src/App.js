@@ -5,7 +5,7 @@
 
 import logo from './logo.svg';
 import './App.css';
-import React,{useRef} from 'react';
+import React,{useEffect, useRef} from 'react';
 // this will allow us to use the webcam and ref to access the webcam stream
 import * as tf from '@tensorflow/tfjs';
 import * as facemesh from '@tensorflow-models/facemesh';
@@ -18,6 +18,7 @@ function App() {
   const webcamRef =useRef(null);
   const canvasRef = useRef(null);
 
+  useEffect(()=>{
   // load facemesh model
   const runFacemesh = async ()=>{
 
@@ -76,6 +77,7 @@ canvasRef.current.height = videoHeight;
     
   
 runFacemesh();
+},[]);
   return (
     <div className="App">
       <header className="App-header">
