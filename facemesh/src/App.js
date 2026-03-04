@@ -10,6 +10,7 @@ import React,{useRef} from 'react';
 import * as tf from '@tensorflow/tfjs';
 import * as facemesh from '@tensorflow-models/facemesh';
 import Webcam from 'react-webcam';
+import { drawPoints } from './utilites';
 
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
 
     });
     setInterval(()=>{
-      detect(net)},10000);
+      detect(net)},100);
 
   }
 
@@ -54,18 +55,19 @@ function App() {
 //1. get video properties
 const  video = webcamRef.current.video;
 const videoWidth =  webcamRef.current.video.videoWidth;
-const videoHieght = webcamRef.current.video.videoHieght;
+const videoHeight = webcamRef.current.video.videoHeight;
 
 //2.set video width and height
 webcamRef.current.video.width = videoWidth;
-webcamRef.current.video.height = videoHieght;
+webcamRef.current.video.height = videoHeight;
 
 //3, set canvas width and height 
 canvasRef.current.width =  videoWidth;
-canvasRef.current.height = videoHieght;
+canvasRef.current.height = videoHeight;
 
 //4. make detections
  const face = await net.estimateFaces(video);
+ drawPoints(face,canvasRef.current.getContext("2d"));
  console.log(face);
 
 
