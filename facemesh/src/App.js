@@ -18,56 +18,62 @@ function App() {
   const canvasRef = useRef(null);
 
   // load facemesh model
-
-  //Why async? Because loading a neural network takes time. It downloads model weights (basically learned numbers) from the internet.
   const runFacemesh = async ()=>{
+
     // facemesh.load()
 // This loads the pretrained FaceMesh neural network into memory.
-
-// await means:
-//“Pause this function until the model finishes loading.”
-
-//Without await, JavaScript would move on immediately before the model is ready.
     const net = await facemesh.load({
-
-      // inputResolution
-
-// This tells the model what size image it should process.
-
-// Why does that matter?
-
-// Neural networks don’t see pixels like humans. They see matrices.
-// Bigger image → more pixels → more math → slower.
-
-// So:
-
-// 900x600 → detailed but heavier computation
-
-// Smaller resolution → faster but less precise
-
-// You’re basically deciding:
-// “Do I want sharper detection or better performance?”
-//       inputResolution:{width:900,height:600},
-      scale:0.8
+      // inputResolution This tells the model what size image it should process.
+      inputResolution:{width:900,height:600},
+   scale:0.8
 
 // scale: 0.8
-
 // This rescales the input before processing.
 
-// If scale = 1
-// → uses full resolution
-
-// If scale = 0.5
-// → processes half-size image (faster, less accurate)
-
-// Scale 0.8 means:
-// “Shrink the image slightly to speed things up while keeping decent accuracy.”
-
-// It’s a performance dial.
-    })
+    });
+    setInterval(()=>{
+      detect(net)},10000);
 
   }
 
+  // detect face landmarks function 
+
+  const detect = async(net)=>{
+
+// reference to the actual webcam component in the DOM
+
+// When React creates the webcam component, useRef stores it in current.
+
+    if(typeof webcamRef.current!=="undefined"
+      &&webcamRef.current!== null&&  // ensure the webcam object is not null  Even if it exists, it might still be empty.
+      webcamRef.current.video.readyState===4 )//This checks if the video stream is fully loaded and ready.){
+{
+// now after all video check is we have to set some video and canvas properties like width and height
+//make detections and draw them on the canvas
+
+//1. get video properties
+const  video = webcamRef.current.video;
+const videoWidth =  webcamRef.current.video.videoWidth;
+const videoHieght = webcamRef.current.video.videoHieght;
+
+//2.set video width and height
+webcamRef.current.video.width = videoWidth;
+webcamRef.current.video.height = videoHieght;
+
+//3, set canvas width and height 
+canvasRef.current.width =  videoWidth;
+canvasRef.current.height = videoHieght;
+
+//4. make detections
+ const face = await net.estimateFaces(video);
+ console.log(face);
+
+
+}
+      }
+    
+  
+runFacemesh();
   return (
     <div className="App">
       <header className="App-header">
